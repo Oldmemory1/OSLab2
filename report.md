@@ -126,9 +126,9 @@ Ubuntu-18.04
      WaitForMultipleObject 函数结束，关闭子进程句柄、信号量和共享内存区句柄，主进程结束
 #### (7)运行结果
      见文件夹下的1.png 2.png 3.png
-     ![picture1](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/1.png)
-     ![picture2](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/2.png)
-     ![picture3](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/3.png)
+![picture1](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/1.png)
+![picture2](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/2.png)
+![picture3](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/3.png)
 ### Ubuntu18.04
 
 
