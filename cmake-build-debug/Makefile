@@ -128,29 +128,29 @@ osLab2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\osLab2.dir\build.make CMakeFiles/osLab2.dir/build
 .PHONY : osLab2/fast
 
-main.obj: main.c.obj
-.PHONY : main.obj
+mainInWindows.obj: mainInWindows.c.obj
+.PHONY : mainInWindows.obj
 
 # target to build an object file
-main.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\osLab2.dir\build.make CMakeFiles/osLab2.dir/main.c.obj
-.PHONY : main.c.obj
+mainInWindows.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\osLab2.dir\build.make CMakeFiles/osLab2.dir/mainInWindows.c.obj
+.PHONY : mainInWindows.c.obj
 
-main.i: main.c.i
-.PHONY : main.i
+mainInWindows.i: mainInWindows.c.i
+.PHONY : mainInWindows.i
 
 # target to preprocess a source file
-main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\osLab2.dir\build.make CMakeFiles/osLab2.dir/main.c.i
-.PHONY : main.c.i
+mainInWindows.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\osLab2.dir\build.make CMakeFiles/osLab2.dir/mainInWindows.c.i
+.PHONY : mainInWindows.c.i
 
-main.s: main.c.s
-.PHONY : main.s
+mainInWindows.s: mainInWindows.c.s
+.PHONY : mainInWindows.s
 
 # target to generate assembly for a file
-main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\osLab2.dir\build.make CMakeFiles/osLab2.dir/main.c.s
-.PHONY : main.c.s
+mainInWindows.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\osLab2.dir\build.make CMakeFiles/osLab2.dir/mainInWindows.c.s
+.PHONY : mainInWindows.c.s
 
 # Help Target
 help:
@@ -161,9 +161,9 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... osLab2
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... mainInWindows.obj
+	@echo ... mainInWindows.i
+	@echo ... mainInWindows.s
 .PHONY : help
 
 

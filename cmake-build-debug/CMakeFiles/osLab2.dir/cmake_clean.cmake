@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/osLab2.dir/main.c.obj"
-  "CMakeFiles/osLab2.dir/main.c.obj.d"
+  "CMakeFiles/osLab2.dir/mainInWindows.c.obj"
+  "CMakeFiles/osLab2.dir/mainInWindows.c.obj.d"
   "libosLab2.dll.a"
   "osLab2.exe"
   "osLab2.exe.manifest"

@@ -74,7 +74,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/C1/osLab2/main.c">
+		<Unit filename="D:/C1/osLab2/mainInWindows.c">
 			<Option target="osLab2"/>
 		</Unit>
 		<Unit filename="D:/C1/osLab2/CMakeLists.txt">

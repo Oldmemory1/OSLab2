@@ -68,28 +68,28 @@ include CMakeFiles/osLab2.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/osLab2.dir/flags.make
 
-CMakeFiles/osLab2.dir/main.c.obj: CMakeFiles/osLab2.dir/flags.make
-CMakeFiles/osLab2.dir/main.c.obj: D:/C1/osLab2/main.c
-CMakeFiles/osLab2.dir/main.c.obj: CMakeFiles/osLab2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\C1\osLab2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/osLab2.dir/main.c.obj"
-	C:\Qt\Qt5.12.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/osLab2.dir/main.c.obj -MF CMakeFiles\osLab2.dir\main.c.obj.d -o CMakeFiles\osLab2.dir\main.c.obj -c D:\C1\osLab2\main.c
+CMakeFiles/osLab2.dir/mainInWindows.c.obj: CMakeFiles/osLab2.dir/flags.make
+CMakeFiles/osLab2.dir/mainInWindows.c.obj: D:/C1/osLab2/mainInWindows.c
+CMakeFiles/osLab2.dir/mainInWindows.c.obj: CMakeFiles/osLab2.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\C1\osLab2\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/osLab2.dir/mainInWindows.c.obj"
+	C:\Qt\Qt5.12.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/osLab2.dir/mainInWindows.c.obj -MF CMakeFiles\osLab2.dir\mainInWindows.c.obj.d -o CMakeFiles\osLab2.dir\mainInWindows.c.obj -c D:\C1\osLab2\mainInWindows.c
 
-CMakeFiles/osLab2.dir/main.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/osLab2.dir/main.c.i"
-	C:\Qt\Qt5.12.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\C1\osLab2\main.c > CMakeFiles\osLab2.dir\main.c.i
+CMakeFiles/osLab2.dir/mainInWindows.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/osLab2.dir/mainInWindows.c.i"
+	C:\Qt\Qt5.12.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\C1\osLab2\mainInWindows.c > CMakeFiles\osLab2.dir\mainInWindows.c.i
 
-CMakeFiles/osLab2.dir/main.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/osLab2.dir/main.c.s"
-	C:\Qt\Qt5.12.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\C1\osLab2\main.c -o CMakeFiles\osLab2.dir\main.c.s
+CMakeFiles/osLab2.dir/mainInWindows.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/osLab2.dir/mainInWindows.c.s"
+	C:\Qt\Qt5.12.2\Tools\mingw730_64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\C1\osLab2\mainInWindows.c -o CMakeFiles\osLab2.dir\mainInWindows.c.s
 
 # Object files for target osLab2
 osLab2_OBJECTS = \
-"CMakeFiles/osLab2.dir/main.c.obj"
+"CMakeFiles/osLab2.dir/mainInWindows.c.obj"
 
 # External object files for target osLab2
 osLab2_EXTERNAL_OBJECTS =
 
-osLab2.exe: CMakeFiles/osLab2.dir/main.c.obj
+osLab2.exe: CMakeFiles/osLab2.dir/mainInWindows.c.obj
 osLab2.exe: CMakeFiles/osLab2.dir/build.make
 osLab2.exe: CMakeFiles/osLab2.dir/linkLibs.rsp
 osLab2.exe: CMakeFiles/osLab2.dir/objects1.rsp
