@@ -157,6 +157,8 @@ Ubuntu-18.04
 ![picture1](./1.png)
 ![picture2](./2.png)
 ![picture3](./3.png)
+![picture4](./shareMemory1.png)
+![picture5](./shareMemory2.png)
 
 
 

@@ -1,7 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/osLab2.dir/mainInLinux.c.o"
-  "CMakeFiles/osLab2.dir/mainInLinux.c.o.d"
-  "osLab2"
+  "CMakeFiles/osLab2.dir/mainInLinux.c.obj"
+  "CMakeFiles/osLab2.dir/mainInLinux.c.obj.d"
+  "libosLab2.dll.a"
+  "osLab2.exe"
+  "osLab2.exe.manifest"
   "osLab2.pdb"
 )
 
