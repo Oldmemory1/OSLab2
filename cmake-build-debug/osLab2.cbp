@@ -81,9 +81,6 @@
 		<Unit filename="/home/user/OsLab2/OSLab2/mainInLinux.c">
 			<Option target="osLab2"/>
 		</Unit>
-		<Unit filename="/home/user/OsLab2/OSLab2/mainInWindows.c">
-			<Option target="osLab2"/>
-		</Unit>
 		<Unit filename="/home/user/OsLab2/OSLab2/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

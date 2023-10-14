@@ -12,12 +12,12 @@
 #include<unistd.h>
 #include <time.h>
 
-#define Cnt_Producer 2
-#define Rep_Producer 6
-#define Cnt_Consumer 3
-#define Rep_Consumer 4
-#define Cnt_Process 5
-#define Len_buffer 3
+#define producerAmount 2
+#define productProducedByOneProducer 6
+#define consumerAmount 3
+#define productConsumedByOneConsumer 4
+#define processAmount 5
+#define bufferSize 3
 
 #define SHMKEY 1024
 #define SEMKEY 2048
@@ -33,11 +33,13 @@ void format_time(){
            timeInfo->tm_hour, timeInfo->tm_min, timeInfo->tm_sec);
     printf("\n");
 }
-
+int getRandomNumber(int minimum_number,int max_number){
+    return (rand() % (max_number + 1 - minimum_number)) + minimum_number;
+}
 
 struct share_memory
 {
-    int a[Len_buffer];
+    int a[bufferSize];
     int beg;
     int end;
 };
@@ -45,7 +47,7 @@ struct share_memory
 void show_buffer(struct share_memory *sm)
 {
     printf("buffer data: ");
-    for(int i=0;i<Len_buffer;i++)
+    for(int i=0;i<bufferSize;i++)
     {
         printf("%d ",sm->a[i]);
 
@@ -88,7 +90,7 @@ int Init_Share_Memory()
     int shmid=shmget(SHMKEY,sizeof(struct share_memory),0666|IPC_CREAT);
     struct share_memory* sm=(struct share_memory*)shmat(shmid,0,0);
     sm->beg=sm->end=0;
-    for(int i=0;i<Len_buffer;i++)
+    for(int i=0;i<bufferSize;i++)
     {
         sm->a[i]=0;
     }
@@ -98,18 +100,18 @@ int Init_Share_Memory()
 void Producer(int ID,int shmid,int semid)
 {
     struct share_memory *sm=(struct share_memory*)shmat(shmid,0,0);
-    for(int i=0;i<Rep_Producer;i++)
+    for(int i=0;i<productProducedByOneProducer;i++)
     {
         srand((unsigned)time(NULL));
-        int temp=(rand()%3+1);
+        int temp=(rand()%3+3);
         sleep(temp);
         P(semid,0);
         P(semid,2);
-
-        printf("Process %d:Producer produce %d at buffer %d at ",ID,temp,sm->end);
+        int RandomNumber= getRandomNumber(-127,128);
+        printf("Process %d:Producer produce %d at buffer %d at ",ID,RandomNumber,sm->end);
         format_time();
         sm->a[sm->end]=temp;
-        sm->end=(sm->end+1)%Len_buffer;
+        sm->end=(sm->end+1)%bufferSize;
         show_buffer(sm);
 
         V(semid,1);
@@ -122,10 +124,10 @@ void Producer(int ID,int shmid,int semid)
 void Consumer(int ID,int shmid,int semid)
 {
     struct share_memory *sm=(struct share_memory*)shmat(shmid,0,0);
-    for(int i=0;i<Rep_Consumer;i++)
+    for(int i=0;i<productConsumedByOneConsumer;i++)
     {
         srand((unsigned)time(NULL));
-        int temp=(rand()%3+1);
+        int temp=(rand()%3+3);
         sleep(temp);
         P(semid,1);
         P(semid,2);
@@ -133,7 +135,7 @@ void Consumer(int ID,int shmid,int semid)
         printf("Process %d:Consumer consume %d at buffer %d at ",ID,sm->a[sm->beg],sm->beg);
         format_time();
         sm->a[sm->beg]=0;
-        sm->beg=(sm->beg+1)%Len_buffer;
+        sm->beg=(sm->beg+1)%bufferSize;
 
         show_buffer(sm);
         V(semid,0);
@@ -149,13 +151,13 @@ int main(int argc,char *argv[])
 
     printf("Process 0:Create Sub Process,1-2 is producer process,3-5 is consumer process\n");
 
-    for(int i=1;i<=Cnt_Process;i++)
+    for(int i=1;i<=processAmount;i++)
     {
         int pid=fork();
         if(pid==0)
         {
             //子进程
-            if(i<=Cnt_Producer)
+            if(i<=producerAmount)
                 Producer(i,shmid,semid);
             else
                 Consumer(i,shmid,semid);
@@ -163,7 +165,7 @@ int main(int argc,char *argv[])
         }
     }
     //主进程
-    for(int i=1;i<=Cnt_Process;i++)
+    for(int i=1;i<=processAmount;i++)
     {
         wait(NULL);
     }

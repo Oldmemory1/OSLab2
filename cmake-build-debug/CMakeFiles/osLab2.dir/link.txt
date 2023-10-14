@@ -1,1 +1,1 @@
-/usr/bin/cc  -Wall -fexec-charset=GBK -g CMakeFiles/osLab2.dir/mainInWindows.c.o CMakeFiles/osLab2.dir/mainInLinux.c.o -o osLab2 
+/usr/bin/cc  -Wall  -g CMakeFiles/osLab2.dir/mainInLinux.c.o -o osLab2 

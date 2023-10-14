@@ -6,4 +6,4 @@ set(CMAKE_C_STANDARD 11)
 add_executable(osLab2
         mainInLinux.c
 )
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -fexec-charset=GBK")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall ")

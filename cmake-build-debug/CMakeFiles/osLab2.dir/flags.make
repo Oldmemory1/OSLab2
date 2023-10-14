@@ -6,5 +6,5 @@ C_DEFINES =
 
 C_INCLUDES = 
 
-C_FLAGS =  -Wall -fexec-charset=GBK -g -fdiagnostics-color=always
+C_FLAGS =  -Wall  -g -fdiagnostics-color=always
 

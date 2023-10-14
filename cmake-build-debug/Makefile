@@ -153,30 +153,6 @@ mainInLinux.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/osLab2.dir/build.make CMakeFiles/osLab2.dir/mainInLinux.c.s
 .PHONY : mainInLinux.c.s
 
-mainInWindows.o: mainInWindows.c.o
-.PHONY : mainInWindows.o
-
-# target to build an object file
-mainInWindows.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/osLab2.dir/build.make CMakeFiles/osLab2.dir/mainInWindows.c.o
-.PHONY : mainInWindows.c.o
-
-mainInWindows.i: mainInWindows.c.i
-.PHONY : mainInWindows.i
-
-# target to preprocess a source file
-mainInWindows.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/osLab2.dir/build.make CMakeFiles/osLab2.dir/mainInWindows.c.i
-.PHONY : mainInWindows.c.i
-
-mainInWindows.s: mainInWindows.c.s
-.PHONY : mainInWindows.s
-
-# target to generate assembly for a file
-mainInWindows.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/osLab2.dir/build.make CMakeFiles/osLab2.dir/mainInWindows.c.s
-.PHONY : mainInWindows.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -189,9 +165,6 @@ help:
 	@echo "... mainInLinux.o"
 	@echo "... mainInLinux.i"
 	@echo "... mainInLinux.s"
-	@echo "... mainInWindows.o"
-	@echo "... mainInWindows.i"
-	@echo "... mainInWindows.s"
 .PHONY : help
 
 
