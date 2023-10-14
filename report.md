@@ -57,79 +57,109 @@ Ubuntu-18.04
     一个消费者消费的数据量#define productConsumedByOneConsumer 4
     进程总量#define processAmount 5
     缓冲区大小#define bufferSize 3
-### Windows10
-#### (1)主进程
-     主进程需要负责创建各对象，首先需要创建共享内存区
-     共享内存区创建完成后，需要创建信号量
-     创建信号量完成后，需创建 5 个子进程，
-     本次实验子进程和主进程都是在一个.c文件中实现，
-     区别在于主进程只含一个参数，
-     而子进程还包含进程的ID，指明子进程序号，主函数结构参考如下
-     int main(int argc,char *argv[]){
-     if(argc==1){
-         //run main process
-     }
-     else{
-         //run sub process
-     int ID=atoi(argv[1]);
-     if(ID is producer){
-         Producer(ID)
-     }else if(ID is consumer){
-         Consumer(ID)
-     }
-     return 0;
-     }
-     在主进程创建子进程调用 CreateProcess 函数以传入命令行的形式创建，
-     并且需要保存创建的子进程句柄到 Handle_process 数组内
-     各对象创建完毕后主进程进入阻塞状态，
-     调用 WaitForMultipleObjects等待Handle_process 数组
-     内句柄对应的所有子进程结束。然后关闭子进程句柄、信号量和共享内存区句柄
-#### (2)共享内存区
-     struct sharedMemory{
-     int a[bufferSize];
-     int begin;
-     int end;
-     };
-     共享内存区在主进程中创建，需要函数 CreateFileMapping 创建内存中临时文件映射对象，
-     对象名称为“sharedMemory”，
-     大小为自定义的共享内存区结构 sharedMemory，
-     然后通过函数MapViewOfFile 将文件映射对象的一个视口映射到主进程，完成临时文件初始化操作
-     共享内存区是生产者和消费者子进程共享使用，
-     在生产者和消费者子进程开始执行操作前，
-     必须先通过函数 OpenFileMapping 打开之前创建的临时文件对象并获取句柄，
-     然后通过函数 MapViewOfFIle 将共享的临时文件对象的一个视口映射到当前进程的地址空间，
-     并定义一个相同结构体的指针指向该地址，
-     然后就可以读取共享内存区数据了，注意最后要关闭句柄，解除映射
-#### (3)信号量句柄
-     Emptyed Filled ReadWriteLock是全局变量
-     在主进程中调用自定义的 Create_Mux 函数创建信号量，
-     在其中调用了CreateSemaphore 函数来创建各个信号量
-     之后在所有子进程的使用中，
-     首先需要使用 OpenSemapHore 打开对应信号量
-     在子进程信号量使用相关内容结束后，同样需要关闭信号量句柄
-#### (4)生产者子进程
-     获取参数 ID 后，需要先在进程打开共享内存区的临时文件映射对象并将一个视口映射到当前进程地址空间，
-     最终会获得指向共享内存区结构的指针 sm，然后调用自定义函数 Open_Mux 在当前进程内获取各个信号量句柄，
-     然后即可开始执行操作。每个生产者均需要重复 productProducedByOneProducer 次生产操作，
-     故需要一个循环结构，在每次循环内，生产者首先调用 Sleep 等待随机的一段时间，然后开始正式的生产执行操作，
-     首先使用函数 WaitForSingleObject模拟 P 操作
-     然后就是往缓冲区生产填充数据，这里需要通过指针 sm 进行操作
-     然后用 ReleaseSemaphore 函数释放信号量
-     重复 Rep_Producer 次生产过程，关闭信号量句柄，解除文件映射，关闭临时文件句柄，该生产者子进程结束
-#### (5)消费者子进程
-     每个消费者均需要重复 productConsumedByOneConsumer 次消费操作，
-     故需要一个循环结构，在每次循环内，消费者首先调用 Sleep 等待随机的一段时间，
-     然后开始正式的消费执行操作，首先使用函数 WaitForSingleObject 模拟 P 操作
-     然后用 ReleaseSemaphore 函数释放信号量
-     重复 Rep_Consumer 次消费过程，关闭信号量句柄，解除文件映射，关闭临时文件句柄，该消费者子进程结束
-#### (6)所有子进程结束后
-     WaitForMultipleObject 函数结束，关闭子进程句柄、信号量和共享内存区句柄，主进程结束
-#### (7)运行结果
-     见文件夹下的1.png 2.png 3.png
-![picture1](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/1.png)
-![picture2](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/2.png)
-![picture3](https://raw.githubusercontent.com/Oldmemory1/OSLab2/master/3.png)
 ### Ubuntu18.04
+
+#### (1) 主进程和子进程
+    主进程需要负责创建各对象，首先需要创建共享内存区，
+    共享内存区创建完成后，需要创建信号量
+    在本实验中采用 fork 函数创建子进程，
+    故主进程在运行到 fork 时会产生分支，以 fork 返回的 pid 号区分
+    进程，故主函数结构参考如下，注意循环使用 fork 函数产生子进程的操
+    作结束后必须在循环内结束进程，不然子进程也会运行 fork 函数
+    int main(int argc,char *argv[]){
+    //create shared memory
+    //create signal
+    for(int i=1;i<=Cnt_Process;i++){
+    int pid=fork();
+    if(pid==0){
+    //do sub process
+    if(is producer)
+    doProduce();
+    else
+    doConsume();
+    return 0;
+    }
+    }
+    //main process
+    doOther();
+    return 0;
+    }
+    主进程在各个对象创建完毕后需要用函数 wait 等待子进程结束，由于创
+    建了 5 个子进程，只需要 5 次循环使用 wait(NULL)即可，最后注意解除
+    共享内存区和信号量
+#### (2)共享内存区
+    共享内存区通过函数 shmget 获取，第一个参数为随意设置的一个关键值，
+    第二个参数即为 share_memory 大小，第三个参数设置为 0666|IPC_CREAT，
+    表示创建新内存区，所有用户均有读写权限，shmget 会返回引用标识符。
+    创建完成后可使用函数 shmat 通过引用标识符将该内存区附加到进程内，
+    shmat 返回值为指向实际连接到的地址的指针，然后可以通过该指针对
+    共享内存区进行加入数据和移出数据
+    对于主进程，需要初始化共享内存区，对于子进程，可以生产或消费缓
+    冲区数据，但注意在操作结束后使用 shmdt 解除进程对该共享内存区的
+    附加。并且在主进程的最后需要使用函数 shmctl 删除内存区，
+    其中 IPC_RMID 参数表示标记该内存区可删除
+#### (3) 信号量
+    信号量通过函数 semget 创建，第一个参数为随意设置的一个关键值，第 
+    二个参数为信号总数量，此处设置为 3 ，第三个参数设置为
+    0666|IPC_CREAT，意义同共享内存区内相同参数，其返回值为引用标识
+    符。之后即可通过 semctl 函数对信号量做具体设置，具体参考如下
+    int semid=semget(SEMKEY,3,0666|IPC_CREAT);
+    semctl(semid,0,SETVAL,3); //empty
+    semctl(semid,1,SETVAL,0); //fill
+    semctl(semid,2,SETVAL,1); //rw
+    由于创建之后子进程需要对信号量做 PV 操作，需要用到 semmop 函数
+    和 sembuf 结构，这里将 P、V 操作封装为两个函数方便调用，输入信号
+    量集应用标识符 semid 和信号量索引 n，可对第 n 个信号量单独做 P、V 
+    操作。
+    //P V操作代码:
+    void P(int semid,int n){
+    struct sembuf temp;
+    temp.sem_num=n;
+    temp.sem_op=-1;
+    temp.sem_flg=0;
+    semop(semid,&temp,1);
+    }
+    void V(int semid,int n){
+    struct sembuf temp;
+    temp.sem_num=n;
+    temp.sem_op=1;
+    temp.sem_flg=0;
+    semop(semid,&temp,1);
+    }
+    在主函数的最后需要使用函数 semctl(semid,IPC_RMID,0)删除 semid 对应的信号量
+#### (4)生产者进程
+    首先需要指向共享内存区的指针 sm，，然后每个生产者均需要重复 productProducedByOneProducer 次生产操作，故
+    需要一个循环结构，在每次循环内，生产者首先调用 Sleep 等待随机的
+    一段时间，然后开始正式的生产执行操作，首先进行 P 操作
+    P(semid,0); //empty
+    P(semid,2);
+    然后就是往缓冲区生产填充数据，这里需要通过指针 sm 进行操作，思
+    路已在通用设计思路中提及，这里省略具体操作
+    然后进行 V 操作
+    V(semid,1); //fill
+    V(semid,2); 
+    重复 productProducedByOneProducer 次生产过程，解除共享内存区附加，该生产者子进程结束
+#### (4)消费者进程
+    首先需要指向共享内存区的指针，然后每个消费者均需要重复 productConsumedByOneConsumer 次消费操作，故
+    需要一个循环结构，在每次循环内，消费者首先调用 Sleep 等待随机的
+    一段时间，然后开始正式的消费执行操作，首先进行 P 操作
+    P(semid,1); //fill
+    P(semid,2); 
+    取出数据的具体操作同生产数据
+    然后进行 V 操作
+    V(semid,0); //empty
+    V(semid,2); 
+    重复 productConsumedByOneConsumer 次消费过程，解除共享内存区附加，该消费者子进程结束
+#### (5)主进程结束
+     调用 5 次 wait(NULL)等待 5 个子进程结束，然后用上文说明的方法删除共享内存区和信号量集。
+#### (6)运行结果
+          见文件夹下的1.png 2.png 3.png
+![picture1](./1.png)
+![picture2](./2.png)
+![picture3](./3.png)
+
+
+
 
 
 
